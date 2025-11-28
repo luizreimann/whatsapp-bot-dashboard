@@ -1,0 +1,113 @@
+/* ===========================================
+   Zaptria Pagination
+   Sobrescreve o padrão do Bootstrap 5
+   =========================================== */
+
+.pagination {
+    --zap-pagination-bg: var(--bs-body-bg);
+    --zap-pagination-border: rgba(15, 191, 159, 0.18);
+    --zap-pagination-hover-bg: rgba(15, 191, 159, 0.08);
+    --zap-pagination-active-bg: var(--zap-primary, #0fbf9f);
+    --zap-pagination-active-border: var(--zap-primary, #0fbf9f);
+    --zap-pagination-text: var(--bs-body-color);
+    --zap-pagination-muted: var(--bs-secondary-color);
+    --zap-pagination-radius: 999px;
+
+    gap: 0.25rem;
+}
+
+.pagination .page-item {
+    /* evita espaços estranhos entre os itens */
+}
+
+.pagination .page-link {
+    border-radius: var(--zap-pagination-radius);
+    border: 1px solid var(--zap-pagination-border);
+    background-color: var(--zap-pagination-bg);
+    color: var(--zap-pagination-text);
+    padding: 0.35rem 0.75rem;
+    min-width: 2.4rem;
+    text-align: center;
+    font-size: 0.85rem;
+    line-height: 1.1;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.1s ease;
+}
+
+/* Ícones dentro da paginação */
+.pagination .page-link i {
+    font-size: 0.8rem;
+}
+
+/* Hover */
+.pagination .page-link:hover {
+    background-color: var(--zap-pagination-hover-bg);
+    border-color: rgba(15, 191, 159, 0.35);
+    color: var(--zap-pagination-text);
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(15, 191, 159, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Foco acessível */
+.pagination .page-link:focus {
+    box-shadow: 0 0 0 0.15rem rgba(15, 191, 159, 0.35);
+    outline: none;
+}
+
+/* Página ativa */
+.pagination .page-item.active .page-link {
+    background-color: var(--zap-pagination-active-bg);
+    border-color: var(--zap-pagination-active-border);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(15, 191, 159, 0.35);
+}
+
+/* Desabilitado (primeiro/último quando não há mais páginas) */
+.pagination .page-item.disabled .page-link {
+    background-color: transparent;
+    border-color: rgba(148, 163, 184, 0.3);
+    color: var(--zap-pagination-muted);
+    opacity: 0.5;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Remover “setinhas” de texto azul padrão em alguns browsers */
+.pagination .page-link:focus-visible {
+    outline: none;
+}
+
+/* Modo escuro */
+[data-bs-theme="dark"] .pagination {
+    --zap-pagination-bg: #0b1722;
+    --zap-pagination-border: rgba(148, 163, 184, 0.35);
+    --zap-pagination-hover-bg: rgba(15, 191, 159, 0.15);
+    --zap-pagination-active-bg: var(--zap-primary, #0fbf9f);
+    --zap-pagination-active-border: var(--zap-primary, #0fbf9f);
+    --zap-pagination-text: #e5e7eb;
+    --zap-pagination-muted: #6b7280;
+}
+
+[data-bs-theme="dark"] .pagination .page-link {
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+}
+
+[data-bs-theme="dark"] .pagination .page-link:hover {
+    box-shadow: 0 6px 16px rgba(0,0,0,0.45);
+}
+
+/* Responsividade: em telas muito pequenas, reduz um pouco o tamanho */
+@media (max-width: 480px) {
+    .pagination .page-link {
+        padding: 0.25rem 0.6rem;
+        min-width: 2rem;
+        font-size: 0.8rem;
+    }
+}

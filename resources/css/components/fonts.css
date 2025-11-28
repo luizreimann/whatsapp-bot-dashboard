@@ -1,0 +1,196 @@
+/* =============================================================================
+   Typography System – Lato
+   ============================================================================= */
+
+/* Variáveis tipográficas globais */
+:root {
+    /* Font family */
+    --app-font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                       "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    /* Font weights */
+    --app-font-weight-light: 300;
+    --app-font-weight-regular: 400;
+    --app-font-weight-medium: 500;
+    --app-font-weight-semibold: 600;
+    --app-font-weight-bold: 700;
+    --app-font-weight-black: 900;
+
+    /* Base sizing (root) */
+    --app-font-size-base: 1rem;
+    --app-line-height-base: 1.55;
+
+    /* Heading scale */
+    --app-h1-size: 2.25rem;
+    --app-h2-size: 1.85rem;
+    --app-h3-size: 1.55rem;
+    --app-h4-size: 1.30rem;
+    --app-h5-size: 1.15rem;
+    --app-h6-size: 1.0rem;
+
+    --app-h-line-height: 1.28;
+
+    /* Display text */
+    --app-display-1-size: 3.0rem;
+    --app-display-2-size: 2.5rem;
+    --app-display-line-height: 1.15;
+
+    /* Small & subtle text */
+    --app-small-size: 0.875rem;
+    --app-small-line-height: 1.45;
+
+    --app-micro-size: 0.775rem;
+    --app-micro-line-height: 1.35;
+}
+
+/* ===========================
+   Font family padrão
+   =========================== */
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family: var(--app-font-family);
+    font-weight: var(--app-font-weight-regular);
+    font-size: var(--app-font-size-base);
+    line-height: var(--app-line-height-base);
+}
+
+/* ===========================
+   Display text
+   =========================== */
+
+.display-1 {
+    font-size: var(--app-display-1-size);
+    font-weight: var(--app-font-weight-bold);
+    line-height: var(--app-display-line-height);
+    letter-spacing: -0.015em;
+}
+
+.display-2 {
+    font-size: var(--app-display-2-size);
+    font-weight: var(--app-font-weight-bold);
+    line-height: var(--app-display-line-height);
+    letter-spacing: -0.010em;
+}
+
+/* ===========================
+   Headings
+   =========================== */
+
+h1, .h1 {
+    font-size: var(--app-h1-size);
+    font-weight: var(--app-font-weight-bold);
+    line-height: var(--app-h-line-height);
+}
+
+h2, .h2 {
+    font-size: var(--app-h2-size);
+    font-weight: var(--app-font-weight-semibold);
+    line-height: var(--app-h-line-height);
+}
+
+h3, .h3 {
+    font-size: var(--app-h3-size);
+    font-weight: var(--app-font-weight-semibold);
+    line-height: var(--app-h-line-height);
+}
+
+h4, .h4 {
+    font-size: var(--app-h4-size);
+    font-weight: var(--app-font-weight-medium);
+    line-height: var(--app-h-line-height);
+}
+
+h5, .h5 {
+    font-size: var(--app-h5-size);
+    font-weight: var(--app-font-weight-medium);
+    line-height: var(--app-h-line-height);
+}
+
+h6, .h6 {
+    font-size: var(--app-h6-size);
+    font-weight: var(--app-font-weight-regular);
+    line-height: var(--app-h-line-height);
+}
+
+/* ===========================
+   Body text
+   =========================== */
+
+p,
+.text-body {
+    font-size: var(--app-font-size-base);
+    font-weight: var(--app-font-weight-regular);
+}
+
+/* ===========================
+   Weight utilities
+   =========================== */
+
+.font-light     { font-weight: var(--app-font-weight-light); }
+.font-regular   { font-weight: var(--app-font-weight-regular); }
+.font-medium    { font-weight: var(--app-font-weight-medium); }
+.font-semibold  { font-weight: var(--app-font-weight-semibold); }
+.font-bold      { font-weight: var(--app-font-weight-bold); }
+.font-black     { font-weight: var(--app-font-weight-black); }
+
+/* ===========================
+   Small text utilities
+   =========================== */
+
+.small,
+.text-small {
+    font-size: var(--app-small-size);
+    line-height: var(--app-small-line-height);
+}
+
+.micro-text,
+.text-micro {
+    font-size: var(--app-micro-size);
+    line-height: var(--app-micro-line-height);
+    opacity: 0.8;
+}
+
+/* ===========================
+   Muted/subtle text
+   =========================== */
+
+.text-muted {
+    opacity: 0.70 !important;
+}
+
+.text-subtle {
+    opacity: 0.60 !important;
+}
+
+/* ===========================
+   Uppercase & spacing utilities
+   =========================== */
+
+.text-uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.text-tight {
+    letter-spacing: -0.02em;
+}
+
+.text-wide {
+    letter-spacing: 0.03em;
+}
+
+/* ===========================
+   Dark mode readability
+   =========================== */
+
+[data-bs-theme="dark"] {
+    --app-font-color-muted: rgba(255,255,255,0.65);
+}
+
+[data-bs-theme="dark"] .text-muted {
+    color: var(--app-font-color-muted) !important;
+}

@@ -1,0 +1,249 @@
+@import "../css/components/buttons.css";
+@import "../css/components/fonts.css";
+@import "../css/components/navbar.css";
+@import "../css/components/pagination.css";
+@import "../css/components/forms.css";
+
+/* ===========================
+   Tema base (Light / Default)
+   =========================== */
+
+:root,
+[data-bs-theme="light"] {
+    /* Cores base da UI */
+    --bs-body-bg: #f3f7f6;
+    --bs-body-color: #102a43;
+
+    --bs-border-color: #dde7e5;
+
+    /* Paleta verde-ciano moderna */
+    --bs-primary: #0fbf9f;
+    --bs-primary-rgb: 15, 191, 159;
+
+    --bs-secondary: #0aa68b;
+    --bs-secondary-rgb: 10, 166, 139;
+
+    --bs-success: #1ad2a8;
+    --bs-success-rgb: 26, 210, 168;
+
+    --bs-info: #15c4ce;
+    --bs-info-rgb: 21, 196, 206;
+
+    --bs-warning: #8ddf5b;
+    --bs-warning-rgb: 141, 223, 91;
+
+    /* Você pode manter o danger “padrão” vermelho, só suavizando um pouco */
+    --bs-danger: #e5535f;
+    --bs-danger-rgb: 229, 83, 95;
+
+    --bs-light: #f9fbfa;
+    --bs-dark: #101820;
+
+    /* Links */
+    --bs-link-color: var(--bs-primary);
+    --bs-link-hover-color: #0aa68b;
+
+    /* Radius mais arredondado */
+    --bs-border-radius: 0.9rem;
+    --bs-border-radius-sm: 0.75rem;
+    --bs-border-radius-lg: 1.1rem;
+    --bs-border-radius-xl: 1.4rem;
+    --bs-border-radius-2xl: 1.75rem;
+
+    /* Sombras suaves padrão */
+    --app-shadow-soft: 0 14px 30px rgba(15, 42, 63, 0.08);
+    --app-shadow-subtle: 0 8px 22px rgba(15, 42, 63, 0.06);
+}
+
+/* ===========================
+   Tema Dark
+   =========================== */
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: #050b10;
+    --bs-body-color: #eef3f5;
+
+    --bs-border-color: #1b2833;
+
+    --bs-primary: #24d1b0;
+    --bs-primary-rgb: 36, 209, 176;
+
+    --bs-secondary: #18b99a;
+    --bs-secondary-rgb: 24, 185, 154;
+
+    --bs-success: #32e0b7;
+    --bs-success-rgb: 50, 224, 183;
+
+    --bs-info: #22d4de;
+    --bs-info-rgb: 34, 212, 222;
+
+    --bs-warning: #a3f074;
+    --bs-warning-rgb: 163, 240, 116;
+
+    --bs-danger: #f46b77;
+    --bs-danger-rgb: 244, 107, 119;
+
+    --bs-light: #101820;
+    --bs-dark: #f7fafc;
+
+    --bs-link-color: var(--bs-primary);
+    --bs-link-hover-color: #18b99a;
+
+    --app-shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.6);
+    --app-shadow-subtle: 0 10px 30px rgba(0, 0, 0, 0.45);
+}
+
+/* ===========================
+   Body / Layout geral
+   =========================== */
+
+body {
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+}
+
+/* Container com um pouco mais de largura visualmente confortável */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1100px;
+    }
+}
+
+/* ===========================
+   Cards
+   =========================== */
+
+.card {
+    border-radius: 1.25rem;
+    border: 0;
+    box-shadow: var(--app-shadow-soft);
+    background-color: var(--bs-light);
+    transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+.card-header {
+    border-bottom: 0;
+    background-color: transparent;
+}
+
+[data-bs-theme="dark"] .card {
+    background-color: #0c141c;
+}
+
+.card:hover:not(.not-animate) {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 36px rgba(15, 42, 63, 0.16);
+}
+
+[data-bs-theme="dark"] .card:hover {
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.8);
+}
+
+/* ===========================
+   Botões
+   =========================== */
+
+.btn {
+    border-radius: 999px;
+    font-weight: 500;
+}
+
+.btn-sm {
+    border-radius: 999px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+    border: none;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-success:hover,
+.btn-info:hover,
+.btn-warning:hover,
+.btn-danger:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+    border-radius: 999px;
+}
+
+/* ===========================
+   Form controls
+   =========================== */
+
+.form-control,
+.form-select {
+    border-radius: 0.9rem;
+    border: 1px solid var(--bs-border-color);
+    padding-block: 0.55rem;
+    padding-inline: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.96);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: rgba(var(--bs-primary-rgb), 0.7);
+    box-shadow: 0 0 0 0.15rem rgba(var(--bs-primary-rgb), 0.18);
+}
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    background-color: #050b10;
+    border-color: #1b2833;
+    color: var(--bs-body-color);
+}
+
+/* ===========================
+   Badges / Pills
+   =========================== */
+
+.badge {
+    border-radius: 999px;
+    padding-inline: 0.7rem;
+    padding-block: 0.3rem;
+    font-weight: 500;
+}
+
+/* ===========================
+   Links
+   =========================== */
+
+a {
+    color: var(--bs-link-color);
+    text-decoration: none;
+}
+
+a:hover:not(.btn, .dropdown-item) {
+    text-decoration: underline;
+}
+
+a:active, .dropdown-item:active {
+    color: inherit;
+    background-color: var(--bs-body-bg);
+}
+
+/* ===========================
+   Utilitários visuais
+   =========================== */
+
+.rounded-pill-soft {
+    border-radius: 999px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+[data-bs-theme="dark"] .rounded-pill-soft {
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+.not-shadow, .not-shadow:hover, .not-shadow:active{
+    box-shadow: none !important;
+}

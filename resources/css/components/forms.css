@@ -1,0 +1,230 @@
+/* ===========================================
+   Zaptria Forms
+   Sobrescreve o visual base dos forms Bootstrap 5
+   Utiliza variáveis para facilitar ajustes futuros
+   =========================================== */
+
+/* Tokens Zaptria específicos para formulários */
+:root {
+    --zap-input-bg:          #ffffff;
+    --zap-input-border:      rgba(15, 191, 159, 0.35);
+    --zap-input-border-soft: rgba(148, 163, 184, 0.45);
+    --zap-input-text:        #0f172a;
+    --zap-input-placeholder: #94a3b8;
+    --zap-input-radius:      0.9rem;
+
+    --zap-input-focus-border:   #0fbf9f;
+    --zap-input-focus-shadow:   rgba(15, 191, 159, 0.35);
+
+    --zap-input-disabled-bg:     #e5e7eb;
+    --zap-input-disabled-border: #cbd5f5;
+
+    --zap-label-color:    #0f172a;
+    --zap-help-text:      #6b7280;
+    --zap-input-group-bg: #f8fafc;
+}
+
+/* Dark mode overrides */
+[data-bs-theme="dark"] {
+    --zap-input-bg:          #020617;
+    --zap-input-border:      rgba(148, 163, 184, 0.55);
+    --zap-input-border-soft: rgba(51, 65, 85, 0.9);
+    --zap-input-text:        #e5e7eb;
+    --zap-input-placeholder: #64748b;
+
+    --zap-input-focus-border:   #0fbf9f;
+    --zap-input-focus-shadow:   rgba(15, 191, 159, 0.55);
+
+    --zap-input-disabled-bg:     #020617;
+    --zap-input-disabled-border: #1f2937;
+
+    --zap-label-color:    #e5e7eb;
+    --zap-help-text:      #9ca3af;
+    --zap-input-group-bg: #020617;
+}
+
+/* ===========================================
+   Controles principais: input / textarea / select
+   =========================================== */
+
+.form-control,
+.form-select,
+.form-control:focus,
+.form-select:focus {
+    --bs-form-control-bg:            var(--zap-input-bg);
+    --bs-form-control-border-color:  var(--zap-input-border-soft);
+    --bs-form-control-color:         var(--zap-input-text);
+    --bs-form-control-placeholder-color: var(--zap-input-placeholder);
+    --bs-form-control-focus-border-color: var(--zap-input-focus-border);
+    --bs-form-control-focus-box-shadow: 0 0 0 .15rem var(--zap-input-focus-shadow);
+
+    background-color: var(--bs-form-control-bg);
+    border-color: var(--bs-form-control-border-color);
+    color: var(--bs-form-control-color);
+
+    border-radius: var(--zap-input-radius);
+    padding: 0.55rem 0.9rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        color 0.15s ease,
+        transform 0.08s ease;
+}
+
+.form-control::placeholder {
+    color: var(--zap-input-placeholder);
+    opacity: 1;
+}
+
+/* Hover leve */
+.form-control:hover,
+.form-select:hover {
+    border-color: var(--zap-input-border);
+}
+
+/* Focus */
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--zap-input-bg);
+    border-color: var(--zap-input-focus-border);
+    outline: 0;
+    box-shadow: 0 0 0 .15rem var(--zap-input-focus-shadow);
+    transform: translateY(-1px);
+}
+
+/* Disabled / read-only */
+.form-control:disabled,
+.form-control[readonly],
+.form-select:disabled {
+    background-color: var(--zap-input-disabled-bg);
+    border-color: var(--zap-input-disabled-border);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Textarea – altura e resize mais suave */
+textarea.form-control {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* ===========================================
+   Labels, help text, etc
+   =========================================== */
+
+.form-label {
+    color: var(--zap-label-color);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+}
+
+.form-text {
+    color: var(--zap-help-text);
+    font-size: 0.8rem;
+}
+
+/* Espaçamento padrão entre campos */
+.mb-field {
+    margin-bottom: 1rem;
+}
+
+/* ===========================================
+   Form-check / checkboxes / radios
+   =========================================== */
+
+.form-check-input {
+    --bs-form-check-bg:               var(--zap-input-bg);
+    --bs-form-check-border-color:     var(--zap-input-border-soft);
+    --bs-form-check-checked-bg:       var(--zap-input-focus-border);
+    --bs-form-check-checked-border-color: var(--zap-input-focus-border);
+    --bs-form-check-focus-box-shadow: 0 0 0 .15rem var(--zap-input-focus-shadow);
+
+    width: 1.05rem;
+    height: 1.05rem;
+    border-radius: 0.35rem;
+    cursor: pointer;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.08s ease;
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 .12rem var(--zap-input-focus-shadow);
+    border-color: var(--zap-input-focus-border);
+}
+
+.form-check-input:checked {
+    transform: translateY(-1px);
+    background-color: var(--bs-form-check-checked-bg);
+    border-color: var(--bs-form-check-checked-border-color);
+}
+
+.form-check-label {
+    color: var(--zap-label-color);
+    font-size: 0.85rem;
+}
+
+/* Switches */
+.form-switch .form-check-input {
+    border-radius: 999px;
+}
+
+/* ===========================================
+   Input groups
+   =========================================== */
+
+.input-group-text {
+    background-color: var(--zap-input-group-bg);
+    border-color: var(--zap-input-border-soft);
+    color: var(--zap-input-placeholder);
+    border-radius: var(--zap-input-radius);
+    font-size: 0.85rem;
+}
+
+/* Corrige bordas ao usar input-group com form-control arredondado */
+.input-group > .form-control,
+.input-group > .form-select,
+.input-group > .input-group-text {
+    border-radius: var(--zap-input-radius);
+}
+
+/* ===========================================
+   Estados de erro / validação
+   =========================================== */
+
+.is-invalid.form-control,
+.is-invalid.form-select {
+    border-color: #fb7185; /* rosa avermelhado */
+    box-shadow: 0 0 0 .15rem rgba(248, 113, 113, 0.35);
+}
+
+.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.invalid-feedback {
+    font-size: 0.78rem;
+}
+
+/* ===========================================
+   Form em dark mode – ajustes finos extras
+   =========================================== */
+
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select {
+    box-shadow: 0 0 0 0 rgba(0,0,0,0);
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus {
+    box-shadow: 0 0 0 .14rem var(--zap-input-focus-shadow);
+}
