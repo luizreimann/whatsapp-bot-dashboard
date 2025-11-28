@@ -1,0 +1,10 @@
+.card
+{
+
+}
+
+.square-icon{
+    display: block;
+    min-width: 55px;
+    min-height: 55px;
+}

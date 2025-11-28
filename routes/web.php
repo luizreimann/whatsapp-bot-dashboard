@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\BotController;
-use App\Http\Controllers\LeadController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\BotController;
+use App\Http\Controllers\Dashboard\LeadController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -27,21 +27,21 @@ Route::post('/logout', [AuthController::class, 'logout'])
 // Dashboard
 Route::prefix('dashboard')
     ->middleware('auth')
+    ->name('dashboard.')
     ->group(function () {
 
         // Homepage
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('home');
 
         // Bot
-        Route::get('/bot', [BotController::class, 'index'])->name('dashboard.bot');
+        Route::get('/bot', [BotController::class, 'index'])->name('bot');
 
         // Leads
-        Route::get('/leads', [LeadController::class, 'index'])->name('dashboard.leads');
-        Route::get('/leads/data', [LeadController::class, 'data'])->name('dashboard.leads.data');
-        Route::get('/leads/lead/{lead}', [LeadController::class, 'show'])->name('dashboard.leads.show');
-        Route::patch('/leads/{lead}/notes', [LeadController::class, 'updateNotes'])
-            ->name('dashboard.leads.notes.update');
+        Route::get('/leads', [LeadController::class, 'index'])->name('leads');
+        Route::get('/leads/data', [LeadController::class, 'data'])->name('leads.data');
+        Route::get('/leads/lead/{lead}', [LeadController::class, 'show'])->name('leads.show');
+        Route::patch('/leads/{lead}/notes', [LeadController::class, 'updateNotes'])->name('leads.notes.update');
 
         // Logout
-        Route::get('/logout', [DashboardController::class, 'logout'])->name('dashboard.logout');
+        Route::get('/logout', [DashboardController::class, 'logout'])->name('logout');
     });

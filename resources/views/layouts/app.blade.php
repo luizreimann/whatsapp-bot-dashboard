@@ -28,7 +28,7 @@
     @auth
     <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{{ route('dashboard') }}">
+            <a class="navbar-brand d-flex align-items-center" href="{{ route('dashboard.home') }}">
                 <picture>
                     <img 
                         src="{{ asset('img/zaptria-dark.webp') }}" 
@@ -55,7 +55,7 @@
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
+                        <a class="nav-link {{ request()->routeIs('dashboard.home') ? 'active' : '' }}" href="{{ route('dashboard.home') }}">
                             Dashboard
                         </a>
                     </li>

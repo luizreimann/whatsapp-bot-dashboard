@@ -54,7 +54,7 @@
                 </div>
 
                 <div>
-                    <a href="#" class="btn btn-outline-primary btn-sm">
+                    <a href="{{ route('dashboard.bot') }}" class="btn btn-outline-primary btn-sm">
                         Gerenciar Robô
                     </a>
                 </div>
@@ -70,7 +70,7 @@
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body d-flex align-items-center">
                 <div class="me-3">
-                    <span class="rounded-circle bg-primary bg-opacity-10 text-primary p-3">
+                    <span class="rounded-circle square-icon bg-primary bg-opacity-10 text-primary p-3">
                         <i class="fa-regular fa-message fa-lg"></i>
                     </span>
                 </div>
@@ -86,7 +86,7 @@
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body d-flex align-items-center">
                 <div class="me-3">
-                    <span class="rounded-circle bg-warning bg-opacity-10 text-warning p-3">
+                    <span class="rounded-circle square-icon bg-warning bg-opacity-10 text-warning p-3">
                         <i class="fa-solid fa-road-barrier fa-lg"></i>
                     </span>
                 </div>
@@ -102,7 +102,7 @@
         <div class="card shadow-sm border-0 h-100">
             <div class="card-body d-flex align-items-center">
                 <div class="me-3">
-                    <span class="rounded-circle bg-success bg-opacity-10 text-success p-3">
+                    <span class="rounded-circle square-icon bg-success bg-opacity-10 text-success p-3">
                         <i class="fa-solid fa-user-plus fa-lg"></i>
                     </span>
                 </div>
@@ -124,7 +124,7 @@
 
     {{-- Leads --}}
     <div class="col-md-2 col-sm-4 col-6">
-        <a href="#" class="text-decoration-none">
+        <a href="{{ route('dashboard.leads') }}" class="text-decoration-none">
             <div class="card shadow-sm border-0 text-center p-3 h-100 align-items-center">
                 <i class="fa-solid fa-address-book fa-2x mb-2 text-primary"></i>
                 <span class="fw-semibold small">Leads</span>
@@ -144,7 +144,7 @@
 
     {{-- Robô --}}
     <div class="col-md-2 col-sm-4 col-6">
-        <a href="#" class="text-decoration-none">
+        <a href="{{ route('dashboard.bot') }}" class="text-decoration-none">
             <div class="card shadow-sm border-0 text-center p-3 h-100 align-items-center">
                 <i class="fa-solid fa-robot fa-2x mb-2 text-success"></i>
                 <span class="fw-semibold small">Robô</span>
