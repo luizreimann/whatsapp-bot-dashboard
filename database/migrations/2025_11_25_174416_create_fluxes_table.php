@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('status')->default('draft');
             $table->json('data')->nullable();
 
-            $table->unsignedInteger('conversion_goal')->default(0);
+            $table->string('conversion_goal')->nullable();
 
             $table->timestamps();
         });

@@ -98,7 +98,7 @@
                     <p class="small mb-1">
                         Não tem uma conta?
                     </p>
-                    <a href="#" class="btn btn-outline-primary w-100">
+                    <a href="{{ route('register') }}" class="btn btn-outline-primary w-100">
                         Cadastre-se
                     </a>
                 </div>

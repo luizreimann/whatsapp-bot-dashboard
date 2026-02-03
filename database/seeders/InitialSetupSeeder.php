@@ -9,6 +9,7 @@ use App\Models\Tenant;
 use App\Models\User;
 use App\Models\WhatsappInstance;
 use App\Models\Flux;
+use App\Models\Subscription;
 
 class InitialSetupSeeder extends Seeder
 {
@@ -21,15 +22,29 @@ class InitialSetupSeeder extends Seeder
             'status' => 'active',
         ]);
 
-        // 2. Criar Usuário vinculado ao Tenant
+        // 2. Criar Usuário Admin vinculado ao Tenant
         $user = User::create([
             'tenant_id' => $tenant->id,
             'name'      => 'Ademiro da Silva',
             'email'     => 'admin@example.com',
             'password'  => Hash::make('password'),
+            'role'      => 'admin',
+            'is_admin'  => true,
         ]);
 
-        // 3. Criar WhatsappInstance inicial
+        // 3. Criar Assinatura Ativa
+        $subscription = Subscription::create([
+            'tenant_id' => $tenant->id,
+            'status' => 'active',
+            'amount' => 297.00,
+            'currency' => 'BRL',
+            'billing_cycle' => 'monthly',
+            'payment_method' => 'seed',
+            'current_period_start' => now(),
+            'current_period_end' => now()->addMonth(),
+        ]);
+
+        // 4. Criar WhatsappInstance inicial
         $instance = WhatsappInstance::create([
             'tenant_id'           => $tenant->id,
             'status'              => 'inactive',
@@ -40,7 +55,7 @@ class InitialSetupSeeder extends Seeder
             'last_status_payload' => null,
         ]);
 
-        // 4. Criar dois fluxos
+        // 5. Criar dois fluxos
         $fluxA = Flux::create([
             'tenant_id' => $tenant->id,
             'name'      => 'Fluxo de Qualificação A',
@@ -69,7 +84,9 @@ class InitialSetupSeeder extends Seeder
 
         echo "\n=== SEED BASE GERADO COM SUCESSO ===\n";
         echo "Tenant ID: {$tenant->id}\n";
-        echo "User login: admin@example.com / password\n";
+        echo "User Admin: admin@example.com / password\n";
+        echo "Is Admin: true\n";
+        echo "Assinatura: ATIVA (válida até " . $subscription->current_period_end->format('d/m/Y') . ")\n";
         echo "WhatsApp Bot Token: {$instance->bot_token}\n";
         echo "Fluxos criados: {$fluxA->name} e {$fluxB->name}\n";
         echo "====================================\n";
