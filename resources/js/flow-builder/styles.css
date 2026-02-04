@@ -1,0 +1,665 @@
+/* Flow Builder Styles - Zaptria Identity */
+
+/* Light Mode (Default) */
+:root,
+[data-bs-theme="light"] {
+    --fb-bg-primary: #f3f7f6;
+    --fb-bg-secondary: #ffffff;
+    --fb-bg-tertiary: #e8efed;
+    --fb-bg-canvas: #f9fbfa;
+    --fb-text-primary: #102a43;
+    --fb-text-secondary: #486581;
+    --fb-text-muted: #829ab1;
+    --fb-border: #dde7e5;
+    --fb-accent: #0fbf9f;
+    --fb-accent-hover: #0aa68b;
+    --fb-success: #1ad2a8;
+    --fb-warning: #8ddf5b;
+    --fb-danger: #e5535f;
+    --fb-purple: #8b5cf6;
+    --fb-info: #15c4ce;
+    --fb-shadow: 0 14px 30px rgba(15, 42, 63, 0.08);
+    --fb-shadow-hover: 0 16px 36px rgba(15, 42, 63, 0.16);
+}
+
+/* Dark Mode */
+[data-bs-theme="dark"] {
+    --fb-bg-primary: #050b10;
+    --fb-bg-secondary: #0c141c;
+    --fb-bg-tertiary: #1b2833;
+    --fb-bg-canvas: #080e14;
+    --fb-text-primary: #eef3f5;
+    --fb-text-secondary: #a3b8c8;
+    --fb-text-muted: #6b8299;
+    --fb-border: #1b2833;
+    --fb-accent: #24d1b0;
+    --fb-accent-hover: #18b99a;
+    --fb-success: #32e0b7;
+    --fb-warning: #a3f074;
+    --fb-danger: #f46b77;
+    --fb-purple: #a78bfa;
+    --fb-info: #22d4de;
+    --fb-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+    --fb-shadow-hover: 0 20px 45px rgba(0, 0, 0, 0.8);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                 "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--fb-bg-primary);
+    color: var(--fb-text-primary);
+}
+
+#flow-builder-root {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Layout */
+.flow-builder {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+
+.flow-builder-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    background-color: var(--fb-bg-secondary);
+    border-bottom: 1px solid var(--fb-border);
+    box-shadow: var(--fb-shadow);
+    z-index: 100;
+}
+
+.flow-builder-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.flow-builder-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.flow-builder-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.flow-builder-sidebar {
+    width: 280px;
+    background-color: var(--fb-bg-secondary);
+    border-right: 1px solid var(--fb-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-header {
+    padding: 16px;
+    border-bottom: 1px solid var(--fb-border);
+}
+
+.sidebar-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fb-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.sidebar-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.node-category {
+    margin-bottom: 20px;
+}
+
+.node-category-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--fb-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    padding: 0 4px;
+}
+
+.node-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background-color: var(--fb-bg-tertiary);
+    border-radius: 8px;
+    margin-bottom: 6px;
+    cursor: grab;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+}
+
+.node-item:hover {
+    background-color: var(--fb-bg-primary);
+    border-color: var(--fb-accent);
+}
+
+.node-item:active {
+    cursor: grabbing;
+}
+
+.node-item-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.node-item-info {
+    flex: 1;
+}
+
+.node-item-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fb-text-primary);
+}
+
+.node-item-desc {
+    font-size: 11px;
+    color: var(--fb-text-muted);
+    margin-top: 2px;
+}
+
+/* Canvas */
+.flow-builder-canvas {
+    flex: 1;
+    position: relative;
+}
+
+/* Properties Panel */
+.flow-builder-properties {
+    width: 320px;
+    background-color: var(--fb-bg-secondary);
+    border-left: 1px solid var(--fb-border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.properties-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid var(--fb-border);
+}
+
+.properties-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.properties-close {
+    background: none;
+    border: none;
+    color: var(--fb-text-muted);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.properties-close:hover {
+    color: var(--fb-text-primary);
+}
+
+.properties-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+}
+
+.properties-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--fb-text-muted);
+    text-align: center;
+    padding: 20px;
+}
+
+.properties-empty-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+/* Form Elements - Zaptria Style */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--fb-text-secondary);
+    margin-bottom: 8px;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background-color: var(--fb-bg-tertiary);
+    border: 1px solid var(--fb-border);
+    border-radius: 0.9rem;
+    color: var(--fb-text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--fb-accent);
+    box-shadow: 0 0 0 3px rgba(15, 191, 159, 0.15);
+}
+
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.form-select {
+    cursor: pointer;
+}
+
+.form-hint {
+    font-size: 11px;
+    color: var(--fb-text-muted);
+    margin-top: 4px;
+}
+
+/* Buttons - Zaptria Style */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.btn-primary {
+    background-color: var(--fb-accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--fb-accent-hover);
+}
+
+.btn-secondary {
+    background-color: var(--fb-bg-tertiary);
+    color: var(--fb-text-primary);
+    border: 1px solid var(--fb-border);
+    box-shadow: none;
+}
+
+.btn-secondary:hover {
+    background-color: var(--fb-border);
+    box-shadow: none;
+}
+
+.btn-success {
+    background-color: var(--fb-success);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: var(--fb-accent-hover);
+}
+
+.btn-danger {
+    background-color: var(--fb-danger);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #d43d4a;
+}
+
+.btn-icon {
+    padding: 10px;
+}
+
+.btn-sm {
+    padding: 8px 14px;
+    font-size: 13px;
+}
+
+/* Back Button */
+.back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: none;
+    border: none;
+    color: var(--fb-text-secondary);
+    font-size: 13px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.back-button:hover {
+    background-color: var(--fb-bg-tertiary);
+    color: var(--fb-text-primary);
+}
+
+/* Flow Name Input */
+.flow-name-input {
+    background: none;
+    border: none;
+    color: var(--fb-text-primary);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 4px;
+    min-width: 200px;
+}
+
+.flow-name-input:hover {
+    background-color: var(--fb-bg-tertiary);
+}
+
+.flow-name-input:focus {
+    outline: none;
+    background-color: var(--fb-bg-tertiary);
+}
+
+/* Save Status */
+.save-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--fb-text-muted);
+}
+
+.save-status.saving {
+    color: var(--fb-warning);
+}
+
+.save-status.saved {
+    color: var(--fb-success);
+}
+
+.save-status.error {
+    color: var(--fb-danger);
+}
+
+/* React Flow Customization */
+.react-flow {
+    background-color: var(--fb-bg-primary) !important;
+}
+
+.react-flow__background {
+    background-color: var(--fb-bg-primary) !important;
+}
+
+.react-flow__minimap {
+    background-color: var(--fb-bg-secondary) !important;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.react-flow__controls {
+    background-color: var(--fb-bg-secondary) !important;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--fb-border);
+}
+
+.react-flow__controls-button {
+    background-color: var(--fb-bg-secondary) !important;
+    border-bottom: 1px solid var(--fb-border) !important;
+    fill: var(--fb-text-secondary) !important;
+}
+
+.react-flow__controls-button:hover {
+    background-color: var(--fb-bg-tertiary) !important;
+}
+
+/* Custom Nodes - Zaptria Style */
+.custom-node {
+    background-color: var(--fb-bg-secondary);
+    border: 2px solid var(--fb-border);
+    border-radius: 1.25rem;
+    width: 260px;
+    max-width: 260px;
+    min-width: 260px;
+    box-shadow: var(--fb-shadow);
+    transition: all 0.15s ease;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.custom-node:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--fb-shadow-hover);
+}
+
+.custom-node.selected {
+    border-color: var(--fb-accent);
+    box-shadow: 0 0 0 3px rgba(15, 191, 159, 0.25);
+}
+
+.custom-node-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--fb-border);
+}
+
+.custom-node-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.custom-node-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--fb-text-primary);
+}
+
+.custom-node-body {
+    padding: 12px 14px;
+}
+
+.custom-node-preview {
+    font-size: 12px;
+    color: var(--fb-text-secondary);
+    line-height: 1.5;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/* Node Type Colors - Zaptria Palette */
+.node-start .custom-node-icon { background-color: rgba(26, 210, 168, 0.15); color: var(--fb-success); }
+.node-start .custom-node { border-color: var(--fb-success); }
+
+.node-message .custom-node-icon { background-color: rgba(15, 191, 159, 0.15); color: var(--fb-accent); }
+
+.node-question .custom-node-icon { background-color: rgba(139, 92, 246, 0.15); color: var(--fb-purple); }
+
+.node-condition .custom-node-icon { background-color: rgba(141, 223, 91, 0.15); color: var(--fb-warning); }
+
+.node-action .custom-node-icon { background-color: rgba(236, 72, 153, 0.15); color: #ec4899; }
+
+.node-integration .custom-node-icon { background-color: rgba(21, 196, 206, 0.15); color: var(--fb-info); }
+
+.node-delay .custom-node-icon { background-color: rgba(130, 154, 177, 0.15); color: var(--fb-text-muted); }
+
+.node-switch .custom-node-icon { background-color: rgba(249, 115, 22, 0.15); color: #f97316; }
+
+.node-media .custom-node-icon { background-color: rgba(16, 185, 129, 0.15); color: #10b981; }
+
+.node-location .custom-node-icon { background-color: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+.node-contact .custom-node-icon { background-color: rgba(99, 102, 241, 0.15); color: #6366f1; }
+
+.node-reaction .custom-node-icon { background-color: rgba(244, 114, 182, 0.15); color: #f472b6; }
+
+.node-random .custom-node-icon { background-color: rgba(168, 85, 247, 0.15); color: #a855f7; }
+
+.node-business-hours .custom-node-icon { background-color: rgba(20, 184, 166, 0.15); color: #14b8a6; }
+
+.node-variable .custom-node-icon { background-color: rgba(14, 165, 233, 0.15); color: #0ea5e9; }
+
+.node-webhook .custom-node-icon { background-color: rgba(139, 92, 246, 0.15); color: #8b5cf6; }
+
+.node-transfer .custom-node-icon { background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; }
+
+.node-end .custom-node-icon { background-color: rgba(229, 83, 95, 0.15); color: var(--fb-danger); }
+.node-end .custom-node { border-color: var(--fb-danger); }
+
+/* Handles */
+.react-flow__handle {
+    width: 12px !important;
+    height: 12px !important;
+    background-color: var(--fb-bg-tertiary) !important;
+    border: 2px solid var(--fb-text-muted) !important;
+}
+
+.react-flow__handle:hover {
+    background-color: var(--fb-accent) !important;
+    border-color: var(--fb-accent) !important;
+}
+
+.react-flow__handle-top {
+    top: -6px !important;
+}
+
+.react-flow__handle-bottom {
+    bottom: -6px !important;
+}
+
+/* Edges */
+.react-flow__edge-path {
+    stroke: var(--fb-text-muted) !important;
+    stroke-width: 2px !important;
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+    stroke: var(--fb-accent) !important;
+}
+
+/* Validation Errors */
+.validation-errors {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--fb-danger);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    z-index: 1000;
+    max-width: 400px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+/* Loading */
+.loading-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--fb-border);
+    border-top-color: var(--fb-accent);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--fb-bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--fb-border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--fb-text-muted);
+}

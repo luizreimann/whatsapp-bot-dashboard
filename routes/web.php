@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\BotController;
 use App\Http\Controllers\Dashboard\LeadController;
 use App\Http\Controllers\Dashboard\Integrations\IntegrationController;
 use App\Http\Controllers\Dashboard\SubscriptionController;
+use App\Http\Controllers\Dashboard\FluxController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\Admin\AdminController;
@@ -101,6 +102,20 @@ Route::prefix('dashboard')
             ->group(function () {
                 Route::get('/', [SubscriptionController::class, 'index'])->name('index');
                 Route::post('/cancel', [SubscriptionController::class, 'cancel'])->name('cancel');
+            });
+
+        // Fluxos
+        Route::prefix('fluxes')
+            ->name('fluxes.')
+            ->group(function () {
+                Route::get('/', [FluxController::class, 'index'])->name('index');
+                Route::get('/create', [FluxController::class, 'create'])->name('create');
+                Route::post('/', [FluxController::class, 'store'])->name('store');
+                Route::get('/{flux}/edit', [FluxController::class, 'edit'])->name('edit');
+                Route::put('/{flux}', [FluxController::class, 'update'])->name('update');
+                Route::delete('/{flux}', [FluxController::class, 'destroy'])->name('destroy');
+                Route::post('/{flux}/duplicate', [FluxController::class, 'duplicate'])->name('duplicate');
+                Route::post('/{flux}/toggle-status', [FluxController::class, 'toggleStatus'])->name('toggle-status');
             });
     });
 

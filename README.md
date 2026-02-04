@@ -390,28 +390,4 @@ php artisan route:clear
 
 ---
 
-## 🤝 Contribuição
-
-1. Fork o projeto
-2. Crie uma branch (`git checkout -b feature/nova-funcionalidade`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/nova-funcionalidade`)
-5. Abra um Pull Request
-
----
-
-## 📄 Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
----
-
-## 📞 Contato
-
-- **Email:** contato@zaptria.com
-- **Website:** https://zaptria.com
-- **Documentação:** [docs.zaptria.com](https://docs.zaptria.com)
-
----
-
-**Desenvolvido com ❤️ usando Laravel, Bootstrap e Stripe**
+**Desenvolvido com ❤️ usando Laravel**
