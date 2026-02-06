@@ -1,8 +1,8 @@
 # 01 - Mapeamento do Projeto: WhatsApp Bot Dashboard (Zaptria)
 
 **Data de criação:** 03/02/2026  
-**Versão:** 1.0  
-**Status do Projeto:** Em desenvolvimento - MVP funcional
+**Versão:** 1.1  
+**Status do Projeto:** Em desenvolvimento - MVP funcional (90%)
 
 ---
 
@@ -58,9 +58,10 @@
                      │
                      ▼
 ┌─────────────────────────────────────────────────────────────┐
-│                  BANCO DE DADOS (SQLite)                     │
-│  • Tenants  • Users  • WhatsappInstances  • Leads          │
-│  • Fluxes   • IntegrationAccounts                           │
+│                  BANCO DE DADOS (PostgreSQL)                 │
+│  • Tenants  • Users  • Companies  • WhatsappInstances      │
+│  • Fluxes   • Leads  • IntegrationAccounts                  │
+│  • Subscriptions  • Payments                                │
 └─────────────────────────────────────────────────────────────┘
                      ▲
                      │
@@ -223,9 +224,29 @@ Usuários do sistema, vinculados a um tenant.
 - tenant_id (FK)
 - name
 - email (único)
+- phone (nullable, max 20) -- Sprint 1.5
+- document (nullable, max 20) -- Sprint 1.5 (CPF)
+- document_type (nullable, default 'cpf') -- Sprint 1.5
 - password
-- role (admin, user - planejado)
+- role (admin, user)
+- is_admin (boolean)
 - remember_token
+- created_at, updated_at
+```
+
+#### 2b. **companies** (Sprint 1.5)
+Dados jurídicos/comerciais da empresa, vinculados a um tenant (1:1, opcional).
+
+```sql
+- id
+- tenant_id (FK, unique)
+- name
+- document (nullable, max 20) -- CNPJ
+- document_type (default 'cnpj')
+- phone (nullable, max 20)
+- email (nullable)
+- segment (nullable)
+- address (JSON: zip, street, number, complement, neighborhood, city, state)
 - created_at, updated_at
 ```
 
@@ -305,18 +326,33 @@ Contas de integração conectadas (CRMs, etc).
 
 ## 📦 Módulos Implementados
 
-### ✅ 1. Autenticação
-**Status:** Implementado
+### ✅ 1. Autenticação e Onboarding
+**Status:** Implementado (atualizado na Sprint 1.5)
 
 **Arquivos:**
 - `app/Http/Controllers/Auth/AuthController.php`
+- `app/Http/Controllers/Auth/RegisterController.php` (refatorado Sprint 1.5)
 - `resources/views/auth/login.blade.php`
+- `resources/views/auth/register/step1.blade.php` (Sprint 1.5)
+- `resources/views/auth/register/step2.blade.php` (Sprint 1.5)
+- `resources/views/layouts/onboarding.blade.php` (Sprint 1.5)
+- `app/Rules/CpfRule.php` (Sprint 1.5)
+- `app/Rules/CnpjRule.php` (Sprint 1.5)
+- `app/Models/Company.php` (Sprint 1.5)
 
 **Funcionalidades:**
 - Login com email/senha
 - Logout com proteção CSRF
 - Sessão persistente
 - Middleware de autenticação
+- Onboarding em 3 etapas (Sprint 1.5):
+  - Etapa 1: Dados pessoais (nome, email, senha, telefone, CPF)
+  - Etapa 2: Dados da empresa (opcional — nome, CNPJ, segmento, endereço)
+  - Etapa 3: Checkout (Stripe Elements)
+- Layout dedicado com stepper visual
+- Validação de CPF/CNPJ (dígitos verificadores)
+- Máscaras de input (CPF, CNPJ, telefone, CEP)
+- Busca de CEP via ViaCEP (auto-preenchimento)
 
 ---
 
@@ -463,11 +499,13 @@ app/Integrations/
 
 ---
 
-### 🔄 8. Fluxos Conversacionais
-**Status:** Estrutura criada, builder pendente
+### ✅ 8. Fluxos Conversacionais
+**Status:** Implementado (Sprint 1 — Flow Builder Visual)
 
 **Arquivos:**
 - `app/Models/Flux.php`
+- `app/Http/Controllers/Dashboard/FluxController.php`
+- `resources/js/flow-builder/` (React Flow + Zustand)
 - Migration: `create_fluxes_table.php`
 
 **Estrutura de Dados:**
@@ -480,11 +518,15 @@ app/Integrations/
 }
 ```
 
-**Pendente:**
-- Flow builder visual (drag & drop)
-- Engine de execução de fluxos
-- Tipos de nós (mensagem, pergunta, condição, ação, integração)
+**Implementado (Sprint 1):**
+- Flow Builder visual drag & drop (React Flow)
+- 18 tipos de nós
+- CRUD completo de fluxos
 - Validação de fluxos
+- Ativar/desativar fluxos
+
+**Pendente:**
+- Engine de execução de fluxos (Sprint 2)
 
 ---
 
@@ -548,6 +590,23 @@ POST /login           → AuthController@login
 POST /logout          → AuthController@logout
 ```
 
+#### Onboarding (Sprint 1.5)
+```
+GET  /register           → RegisterController@showStep1
+POST /register           → RegisterController@processStep1
+GET  /register/company   → RegisterController@showStep2
+POST /register/company   → RegisterController@processStep2
+```
+
+#### Checkout
+```
+GET  /checkout/success              → CheckoutController@success
+GET  /checkout/{subscription}       → CheckoutController@index
+POST /checkout/{subscription}/payment → CheckoutController@createPayment
+POST /checkout/{subscription}/process → CheckoutController@processPayment
+PATCH /checkout/{subscription}/amount → CheckoutController@updateAmount
+```
+
 #### Dashboard (protegido por auth)
 ```
 GET  /dashboard                           → DashboardController@index
@@ -582,9 +641,9 @@ POST /api/tenants/{tenant}/whatsapp/incoming → WhatsappWebhookController@incom
 
 ## 🎨 Frontend
 
-### Layout
-- **Base:** `resources/views/layouts/app.blade.php`
-- **Sidebar:** Navegação principal
+### Layouts
+- **Base:** `resources/views/layouts/app.blade.php` — Dashboard com navbar completa
+- **Onboarding:** `resources/views/layouts/onboarding.blade.php` — Cadastro/checkout com stepper visual (Sprint 1.5)
 - **Topbar:** Informações do usuário, theme toggle
 - **Responsivo:** Mobile-friendly
 
@@ -604,13 +663,32 @@ POST /api/tenants/{tenant}/whatsapp/incoming → WhatsappWebhookController@incom
 - Copiar textos com um clique
 - Feedback de sucesso
 
+#### 4. Input Masks (`utils/input-masks.js`) — Sprint 1.5
+- Máscaras progressivas vanilla JS
+- CPF: `000.000.000-00`
+- CNPJ: `00.000.000/0000-00`
+- Telefone: `(00) 00000-0000`
+- CEP: `00000-000`
+- Inicialização via atributo `data-mask`
+
+#### 5. CEP Lookup (`utils/cep-lookup.js`) — Sprint 1.5
+- Busca automática via ViaCEP
+- Auto-preenchimento de rua, bairro, cidade, estado
+- Spinner de loading + mensagem de erro
+
+#### 6. Flow Builder (`flow-builder/`) — Sprint 1
+- React Flow v12.10.0 + Zustand
+- 18 tipos de nós customizados
+- Drag & drop, validação, persistência
+
 ### Estilos
+- **Bootstrap 5.3.3:** Framework CSS principal
 - **TailwindCSS 4.0:** Utility-first CSS
-- **Bootstrap Icons:** Via Font Awesome
-- **Custom CSS:** `resources/css/`
+- **Font Awesome:** Ícones
+- **Custom CSS:** `resources/css/` (tema claro/escuro)
 
 ### Assets
-- **Build:** Vite
+- **Build:** Vite 7.0
 - **Hot Reload:** Disponível em desenvolvimento
 
 ---
@@ -619,18 +697,19 @@ POST /api/tenants/{tenant}/whatsapp/incoming → WhatsappWebhookController@incom
 
 ### Prioridade Alta
 
-#### 1. Flow Builder Visual
-- [ ] Interface drag & drop para criar fluxos
-- [ ] Tipos de nós:
-  - Mensagem de texto
-  - Pergunta (captura de resposta)
-  - Condição (if/else)
-  - Ação (salvar lead, enviar para CRM)
-  - Integração (chamar API externa)
-- [ ] Validação de fluxos
-- [ ] Preview do fluxo
+#### 1. ~~Flow Builder Visual~~ ✅ Concluído (Sprint 1)
+- [x] Interface drag & drop com React Flow
+- [x] 18 tipos de nós implementados
+- [x] Validação de fluxos
+- [x] CRUD completo + ativar/desativar
 
-#### 2. Engine de Execução de Fluxos
+#### 1.5. ~~Onboarding em 3 Etapas~~ ✅ Concluído (Sprint 1.5)
+- [x] Cadastro multi-step (Dados Pessoais → Empresa → Checkout)
+- [x] Tabela `companies` + campos `phone`/`document` em `users`
+- [x] Validação CPF/CNPJ + máscaras + busca CEP
+- [x] Layout `onboarding` com stepper visual
+
+#### 2. Engine de Execução de Fluxos ← PRÓXIMA
 - [ ] Máquina de estados para conversas
 - [ ] Sessões de conversa (armazenar contexto)
 - [ ] Processamento de mensagens recebidas
@@ -639,9 +718,9 @@ POST /api/tenants/{tenant}/whatsapp/incoming → WhatsappWebhookController@incom
 - [ ] Timeout de sessão
 
 #### 3. Gerenciamento de Fluxos
-- [ ] CRUD completo de fluxos
-- [ ] Ativar/desativar fluxos
-- [ ] Duplicar fluxos
+- [x] CRUD completo de fluxos
+- [x] Ativar/desativar fluxos
+- [x] Duplicar fluxos
 - [ ] Versionamento de fluxos
 - [ ] Analytics por fluxo
 
@@ -764,5 +843,5 @@ Esta é a primeira documentação do projeto. Documentos adicionais serão criad
 
 ---
 
-**Última atualização:** 03/02/2026  
+**Última atualização:** 06/02/2026  
 **Mantido por:** Equipe de Desenvolvimento Zaptria

@@ -85,7 +85,7 @@
 - **CSS Framework:** Bootstrap 5.3.3 + TailwindCSS 4.0
 - **Icons:** Font Awesome + Lucide React
 - **Fonts:** Google Fonts (Lato)
-- **JavaScript:** Vanilla JS + Stripe Elements
+- **JavaScript:** Vanilla JS + Stripe Elements + Input Masks + CEP Lookup
 - **Flow Builder:** React 19 + React Flow + Zustand
 
 ### Infraestrutura
@@ -98,12 +98,12 @@
 
 ## 📋 Funcionalidades
 
-### ✅ Já Implementado (85% do MVP)
+### ✅ Já Implementado (90% do MVP)
 
 #### 🏢 Sistema Multi-tenant
 - [x] Arquitetura multi-tenant completa
 - [x] Isolamento de dados por tenant
-- [x] Registro de novos tenants
+- [x] Registro de novos tenants (onboarding 3 etapas)
 - [x] Sistema de assinaturas e pagamentos
 
 #### 💳 Sistema de Pagamentos
@@ -153,9 +153,19 @@
 - [x] Ativar/desativar fluxos
 - [x] 51 testes automatizados (37 JS + 14 PHP)
 
-### 🔄 Pendente para MVP (15%)
+#### 🚀 Onboarding em 3 Etapas (Sprint 1.5)
+- [x] Cadastro multi-step (Dados Pessoais → Empresa → Checkout)
+- [x] Tabela `companies` (dados opcionais da empresa)
+- [x] Campos `phone`, `document` e `document_type` em `users`
+- [x] Validação de CPF/CNPJ (Rules customizadas)
+- [x] Layout `onboarding` com stepper visual
+- [x] Máscaras de input vanilla JS (CPF, CNPJ, telefone, CEP)
+- [x] Busca de CEP via ViaCEP (auto-preenchimento)
+- [x] 37 testes automatizados (20 unit + 5 model + 12 feature)
 
-#### ⚙️ Engine de Execução (Sprint 2)
+### 🔄 Pendente para MVP (10%)
+
+#### ⚙️ Engine de Execução (Sprint 2) ← Próxima
 - [ ] Máquina de estados para conversas
 - [ ] Sessões de conversa com contexto
 - [ ] Processamento de mensagens recebidas
@@ -218,7 +228,8 @@ docker exec -it <container-id> php artisan migrate:fresh --seed
 
 ### Tabelas Principais
 - `tenants` - Empresas clientes
-- `users` - Usuários do sistema
+- `users` - Usuários do sistema (+ `phone`, `document`, `document_type`)
+- `companies` - Dados jurídicos/comerciais da empresa (opcional, 1:1 com tenant)
 - `subscriptions` - Assinaturas ativas
 - `payments` - Histórico de pagamentos
 - `leads` - Leads capturados
@@ -228,6 +239,7 @@ docker exec -it <container-id> php artisan migrate:fresh --seed
 
 ### Relacionamentos
 - Tenant → Users (1:N)
+- Tenant → Company (1:1, opcional)
 - Tenant → Subscription (1:1)
 - Tenant → Leads (1:N)
 - Tenant → Fluxes (1:N)
@@ -243,14 +255,15 @@ docker exec -it <container-id> php artisan test
 ```
 
 ### Cobertura de Testes
-- ✅ **103 testes** implementados
+- ✅ **140 testes** implementados
 - ✅ 100% de cobertura das funcionalidades core
-- ✅ Models: 26 testes
+- ✅ Models: 31 testes (26 + 5 Company)
 - ✅ Services: 6 testes
 - ✅ Middleware: 7 testes
 - ✅ Jobs: 4 testes
-- ✅ Controllers: 13 testes
+- ✅ Controllers: 25 testes (13 + 12 Register)
 - ✅ Policies: 6 testes
+- ✅ Rules: 20 testes (10 CPF + 10 CNPJ)
 - ✅ React Components: 37 testes (Vitest)
 - ✅ Zustand Store: 4 testes
 
@@ -272,6 +285,10 @@ docker exec -it <container-id> php artisan test
 ### Sprint 1 - Flow Builder Visual
 - [🛠️ Desenvolvimento](.sprints/1/01-dev.md) - Log completo de desenvolvimento
 - [📊 Relatório Final](.sprints/1/02-final.md) - Resumo executivo da sprint
+
+### Sprint 1.5 - Onboarding em 3 Etapas
+- [📋 Especificação](.sprints/1.5/01-spec.md) - Especificação técnica completa
+- [🛠️ Desenvolvimento](.sprints/1.5/02-dev.md) - Log completo de desenvolvimento
 
 ---
 
@@ -429,7 +446,61 @@ Implementar interface visual drag & drop para criação de fluxos conversacionai
 
 ---
 
-## 🔧 Desenvolvimento
+## � Sprint 1.5 - Onboarding em 3 Etapas ✅
+
+**Data:** 06/02/2026  
+**Status:** 100% CONCLUÍDA
+
+### 📋 Objetivo
+Refatorar o fluxo de cadastro/checkout em 3 etapas para melhorar a UX de onboarding, enriquecer dados de usuário e empresa, e criar layout dedicado com stepper visual.
+
+### ✅ Entregas Realizadas
+
+#### **Backend (10 arquivos)**
+- ✅ 2 Migrations (`add_profile_fields_to_users`, `create_companies_table`)
+- ✅ 1 Model (`Company` com cast JSON para endereço)
+- ✅ 2 Custom Rules (`CpfRule`, `CnpjRule` com validação de dígitos verificadores)
+- ✅ 1 Controller refatorado (`RegisterController` com 4 métodos)
+- ✅ 4 Rotas de onboarding (GET/POST para step 1 e step 2)
+- ✅ 1 Factory (`CompanyFactory`)
+
+#### **Frontend (4 arquivos)**
+- ✅ Layout `onboarding.blade.php` com stepper visual 3 etapas
+- ✅ View `step1.blade.php` (dados pessoais: nome, email, senha, telefone, CPF)
+- ✅ View `step2.blade.php` (dados empresa: nome, CNPJ, segmento, endereço com CEP)
+- ✅ Checkout atualizado para usar layout onboarding (step 3)
+
+#### **JavaScript (3 módulos)**
+- ✅ `input-masks.js` — Máscaras vanilla JS (CPF, CNPJ, telefone, CEP)
+- ✅ `cep-lookup.js` — Auto-preenchimento de endereço via ViaCEP
+- ✅ `onboarding.js` — Entry point para páginas de onboarding
+
+#### **Testes (37 testes)**
+- ✅ 10 testes unitários CpfRule
+- ✅ 10 testes unitários CnpjRule
+- ✅ 5 testes unitários Company model
+- ✅ 12 testes feature RegisterController (step 1 + step 2)
+
+### 📊 Números da Sprint
+| Métrica | Valor |
+|---------|-------|
+| **Arquivos Criados** | 16 |
+| **Arquivos Editados** | 6 |
+| **Testes Implementados** | 37 |
+| **Cobertura de Testes** | 100% |
+
+### 🎯 Resultado Final
+**Onboarding 100% funcional!** O Zaptria agora possui:
+- Cadastro em 3 etapas com stepper visual
+- Dados enriquecidos de usuário (telefone, CPF)
+- Dados opcionais de empresa (CNPJ, segmento, endereço)
+- Validação brasileira de CPF/CNPJ
+- Auto-preenchimento de endereço por CEP
+- Pronto para Sprint 2 (Engine de Execução)
+
+---
+
+## �🔧 Desenvolvimento
 
 ### Comandos Úteis
 ```bash
@@ -476,9 +547,10 @@ php artisan route:clear
 
 ### Próximas Sprints
 1. ~~**Sprint 1:** Flow Builder Visual~~ ✅ **CONCLUÍDA**
-2. **Sprint 2:** Engine de Execução de Fluxos (Próxima)
-3. **Sprint 3:** Integrações Adicionais
-4. **Sprint 4:** Analytics e Relatórios
+2. ~~**Sprint 1.5:** Onboarding em 3 Etapas~~ ✅ **CONCLUÍDA**
+3. **Sprint 2:** Engine de Execução de Fluxos (Próxima)
+4. **Sprint 3:** Integrações Adicionais
+5. **Sprint 4:** Analytics e Relatórios
 
 ### Pós-MVP
 - Múltiplos planos de assinatura

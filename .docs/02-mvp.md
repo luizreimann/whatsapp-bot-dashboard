@@ -1,7 +1,7 @@
 # 02 - MVP: Escopo e Roadmap de Lançamento
 
 **Data de criação:** 03/02/2026  
-**Versão:** 1.0  
+**Versão:** 1.1  
 **Objetivo:** Definir o escopo mínimo viável para lançamento do Zaptria
 
 ---
@@ -40,7 +40,7 @@ O **Zaptria MVP** é um SaaS multi-tenant que permite empresas automatizarem con
 
 ## 📊 Status Atual vs MVP
 
-### ✅ Já Implementado (70% do MVP)
+### ✅ Já Implementado (90% do MVP)
 
 #### Infraestrutura
 - [x] Arquitetura multi-tenant
@@ -76,25 +76,33 @@ O **Zaptria MVP** é um SaaS multi-tenant que permite empresas automatizarem con
 - [x] Interface de conexão/desconexão
 - [x] Teste de credenciais
 
-### 🔄 Pendente para MVP (30%)
+#### Painel Admin e Pagamentos (Sprint 0) ✅
+- [x] Checkout transparente com Stripe Elements
+- [x] Assinaturas recorrentes (R$ 297/mês)
+- [x] Bloqueio de acesso sem pagamento
+- [x] Painel administrativo completo
+- [x] Provisionamento automático após pagamento
+- [x] Suspensão por inadimplência
 
-#### Painel Admin e Pagamentos (CRÍTICO - Simplificado)
-- [ ] Criação de tenants via admin
-- [ ] Geração de link de pagamento (valor fixo)
-- [ ] Integração com gateway (Stripe/Mercado Pago)
-- [ ] Provisionamento automático após pagamento
-- [ ] Suspensão automática por inadimplência
-- ~~Cadastro de planos~~ (Pós-MVP)
-- ~~Controle de limites~~ (Pós-MVP - todos têm acesso completo)
+#### Flow Builder Visual (Sprint 1) ✅
+- [x] Interface visual drag & drop com React Flow
+- [x] 18 tipos de nós implementados
+- [x] Validação de fluxos
+- [x] CRUD completo de fluxos
+- [x] Ativar/desativar fluxos
 
-#### Flow Builder (CRÍTICO)
-- [ ] Interface visual drag & drop
-- [ ] Tipos de nós implementados
-- [ ] Validação de fluxos
-- [ ] Preview em tempo real
-- [ ] Salvar/carregar fluxos
+#### Onboarding em 3 Etapas (Sprint 1.5) ✅
+- [x] Cadastro multi-step (Dados Pessoais → Empresa → Checkout)
+- [x] Tabela `companies` (dados opcionais da empresa)
+- [x] Campos `phone`, `document`, `document_type` em `users`
+- [x] Validação de CPF/CNPJ (Rules customizadas)
+- [x] Layout `onboarding` com stepper visual
+- [x] Máscaras de input vanilla JS (CPF, CNPJ, telefone, CEP)
+- [x] Busca de CEP via ViaCEP (auto-preenchimento)
 
-#### Engine de Execução (CRÍTICO)
+### 🔄 Pendente para MVP (10%)
+
+#### Engine de Execução (CRÍTICO — Sprint 2) ← PRÓXIMA
 - [ ] Máquina de estados para conversas
 - [ ] Sessões de conversa com contexto
 - [ ] Processamento de mensagens recebidas
@@ -141,16 +149,28 @@ O **Zaptria MVP** é um SaaS multi-tenant que permite empresas automatizarem con
 ## 🚀 Funcionalidades Core do MVP
 
 ### 1. Autenticação e Onboarding
-**Status:** ✅ Implementado
+**Status:** ✅ Implementado (atualizado Sprint 1.5)
 
-**Funcionalidades:**
+**Funcionalidades Implementadas:**
 - Login com email/senha
 - Logout seguro
 - Sessão persistente
 - Proteção CSRF
+- Checkout com Stripe Elements
+
+**Sprint 1.5 — Onboarding em 3 Etapas (✅ Concluído):**
+- Cadastro multi-step: Dados Pessoais → Empresa (opcional) → Checkout
+- Tabela `companies` separada (dados jurídicos/comerciais opcionais)
+- Campos `phone`, `document` e `document_type` em `users`
+- Validação de CPF/CNPJ (Rules customizadas com dígitos verificadores)
+- Layout `onboarding.blade.php` dedicado com stepper visual
+- Máscaras de input vanilla JS (CPF, CNPJ, telefone, CEP)
+- Busca de CEP via ViaCEP (módulo reutilizável)
+- Checkout usa layout onboarding (sem navbar), success usa layout padrão
+- 37 testes automatizados (20 unit + 5 model + 12 feature)
+- Ver especificação em `.sprints/1.5/01-spec.md` e desenvolvimento em `.sprints/1.5/02-dev.md`
 
 **Melhorias Futuras (Pós-MVP):**
-- Registro de novos tenants
 - Verificação de email
 - Recuperação de senha
 - 2FA
@@ -173,8 +193,8 @@ O **Zaptria MVP** é um SaaS multi-tenant que permite empresas automatizarem con
 
 ---
 
-### 3. Flow Builder Visual ⚠️ CRÍTICO
-**Status:** 🔄 Pendente (estrutura de dados pronta)
+### 3. Flow Builder Visual
+**Status:** ✅ Implementado (Sprint 1 — 18 tipos de nós, React Flow)
 
 **Funcionalidades Necessárias:**
 
@@ -377,7 +397,7 @@ interface NodeProcessorInterface {
 ---
 
 ### 5. Gerenciamento de Fluxos
-**Status:** 🔄 Estrutura criada, CRUD pendente
+**Status:** ✅ Implementado (Sprint 1)
 
 **Funcionalidades Necessárias:**
 
@@ -524,18 +544,22 @@ Esta é uma funcionalidade **essencial** para o MVP, permitindo self-service com
 ```
 Landing Page (Preço Único)
      ↓
-Cadastro (email, senha, empresa)
+Etapa 1: Cadastro do Dono (nome, email, senha, telefone, CPF)
      ↓
-Geração de Link de Pagamento (Valor Fixo)
+Etapa 2: Cadastro da Empresa (opcional — nome, CNPJ, segmento, endereço)
      ↓
-Gateway (Stripe/Mercado Pago)
+Etapa 3: Checkout Stripe Elements (layout onboarding, sem navbar)
      ↓
 Webhook de Confirmação
      ↓
 Provisionamento Automático
      ↓
-Tenant Ativo (SEM LIMITES) + Email de Boas-vindas
+Tenant Ativo (SEM LIMITES) + Tela de Sucesso (layout padrão com navbar)
 ```
+
+> **Atualizado em 06/02/2026:** Fluxo de cadastro dividido em 3 etapas (Sprint 1.5).
+> Dados da empresa são opcionais, permitindo cadastro como pessoa física.
+> Tabela `companies` criada separada de `tenants` para isolamento de dados.
 
 **Simplificação para MVP:**
 - ✅ Produto único com preço fixo (ex: R$ 297/mês)
@@ -690,25 +714,38 @@ CREATE TABLE payments (
 
 ---
 
-#### Passo 2: Cadastro
-**Rota:** `/register` (pública)
+#### Passo 2: Cadastro (✅ Atualizado Sprint 1.5)
+**Rota:** `/register` e `/register/company` (públicas)
 
-**Formulário:**
+**Etapa 1 — Dados Pessoais (`/register`):**
 ```
-- Nome completo
-- Email
-- Senha
-- Nome da empresa
-- Telefone (opcional)
-- Aceitar termos de uso
+- Nome completo *
+- Email *
+- Senha *
+- Confirmar Senha *
+- Telefone (opcional, máscara)
+- CPF (opcional, validado)
+```
+
+**Etapa 2 — Dados da Empresa (`/register/company`, opcional):**
+```
+- Nome da Empresa
+- CNPJ (validado)
+- Telefone Comercial
+- Email Comercial
+- Segmento (select)
+- Endereço (CEP com auto-preenchimento via ViaCEP)
 ```
 
 **Ação:**
-1. Validar dados
-2. Criar tenant (status: pending)
-3. Criar usuário (vinculado ao tenant)
-4. Criar subscription (status: pending, amount: 297.00)
-5. Redirecionar para pagamento
+1. Etapa 1: Validar dados pessoais, salvar na session (senha já hasheada)
+2. Etapa 2: Validar dados da empresa (se preenchidos)
+3. Criar tenant (status: pending)
+4. Criar usuário (vinculado ao tenant, com phone/document)
+5. Criar company (se dados preenchidos, vinculada ao tenant)
+6. Criar subscription (status: pending, amount: 297.00)
+7. Login automático
+8. Redirecionar para checkout
 
 ---
 
@@ -944,10 +981,14 @@ class CheckExpiredSubscriptions implements ShouldQueue
 - FAQ
 - Botão CTA único "Começar Agora"
 
-#### 2. Cadastro (`/register`)
-- Formulário de registro
-- Validação em tempo real
-- Indicador de força de senha
+#### 2. Cadastro (`/register` + `/register/company`) — Sprint 1.5
+- Formulário em 2 etapas com stepper visual
+- Etapa 1: Dados pessoais (nome, email, senha, telefone, CPF)
+- Etapa 2: Dados da empresa (opcional — nome, CNPJ, segmento, endereço)
+- Máscaras de input (CPF, CNPJ, telefone, CEP)
+- Busca de CEP via ViaCEP
+- Validação de CPF/CNPJ
+- Layout `onboarding` dedicado
 
 #### 3. Checkout (`/checkout/{subscription}`)
 - Resumo do valor (R$ 297/mês)
@@ -1504,56 +1545,28 @@ GET  /v4/spreadsheets/{spreadsheetId}/values/{range}
 
 ## 📅 Roadmap de Desenvolvimento
 
-### Sprint 0: Painel Admin e Sistema de Pagamentos (2 semanas) ⚠️ CRÍTICO
-**Objetivo:** Implementar self-service completo (cadastro, pagamento, provisionamento)
+### Sprint 0: Painel Admin e Sistema de Pagamentos ✅ CONCLUÍDA
+**Data:** 03/02/2026
 
-**Tarefas:**
-- [ ] Criar migrations (subscriptions, payments) - **SEM plans e usage_tracking**
-- [ ] Criar models (Subscription, Payment)
-- [ ] Implementar PaymentService (Stripe ou Mercado Pago) com valor fixo
-- [ ] Criar TenantProvisioningService
-- [ ] Implementar webhook de pagamento
-- [ ] Criar middleware CheckSubscriptionStatus (apenas verifica se está ativo)
-- [ ] Criar job CheckExpiredSubscriptions
-- [ ] **Landing Page** (/) - preço único
-- [ ] **Cadastro** (/register)
-- [ ] **Checkout** (/checkout) - valor fixo
-- [ ] **Admin Dashboard** (/admin)
-- [ ] **Admin - Gestão de Tenants** (/admin/tenants)
-- [ ] **Tenant - Assinatura** (/dashboard/subscription)
-- [ ] Testes end-to-end do fluxo completo
-- [ ] Configurar webhooks no gateway
-
-**Entregável:** Sistema completo de cadastro, pagamento e provisionamento automático (produto único, sem limites)
-
-**Simplificações do MVP:**
-- ❌ Sem sistema de planos
-- ❌ Sem controle de limites
-- ❌ Sem upgrade/downgrade
-- ✅ Produto único: R$ 297/mês (exemplo)
-- ✅ Acesso completo a todas as funcionalidades
+**Entregas:** 52 testes, 35+ arquivos, sistema completo de pagamentos com Stripe, painel admin, provisionamento automático.
 
 ---
 
-### Sprint 1: Flow Builder (2-3 semanas)
-**Objetivo:** Interface visual funcional para criar fluxos
+### Sprint 1: Flow Builder Visual ✅ CONCLUÍDA
+**Data:** 03-04/02/2026
 
-**Tarefas:**
-- [ ] Pesquisar e escolher biblioteca (React Flow recomendado)
-- [ ] Setup do React no Laravel (Inertia.js ou API)
-- [ ] Implementar canvas drag & drop
-- [ ] Criar componentes de nós (8 tipos)
-- [ ] Implementar conexões entre nós
-- [ ] Validação de fluxos
-- [ ] Salvar/carregar fluxos do banco
-- [ ] Preview em tempo real
-- [ ] Testes de usabilidade
-
-**Entregável:** Flow Builder funcional com todos os tipos de nós
+**Entregas:** 51 testes, 40+ arquivos, Flow Builder com React Flow, 18 tipos de nós, CRUD completo.
 
 ---
 
-### Sprint 2: Engine de Execução (2-3 semanas)
+### Sprint 1.5: Onboarding em 3 Etapas ✅ CONCLUÍDA
+**Data:** 06/02/2026
+
+**Entregas:** 37 testes, 16 novos arquivos + 6 editados, onboarding 3 etapas, validação CPF/CNPJ, máscaras de input, busca CEP, layout dedicado com stepper visual.
+
+---
+
+### Sprint 2: Engine de Execução (2-3 semanas) ← PRÓXIMA
 **Objetivo:** Processar mensagens e executar fluxos
 
 **Tarefas:**
@@ -1837,46 +1850,34 @@ GET  /v4/spreadsheets/{spreadsheetId}/values/{range}
 
 ## 🎯 Resumo Executivo
 
-### O que temos hoje (70%)
+### O que temos hoje (90%)
 ✅ Infraestrutura multi-tenant  
 ✅ Autenticação e dashboard  
 ✅ Gerenciamento de leads completo  
 ✅ Webhooks do bot WhatsApp  
 ✅ 2 integrações CRM funcionais  
 ✅ Arquitetura de integrações extensível  
+✅ Painel Admin + Sistema de Pagamentos (Sprint 0)  
+✅ Flow Builder Visual com 18 nós (Sprint 1)  
+✅ Onboarding em 3 Etapas com CPF/CNPJ (Sprint 1.5)  
 
-### O que falta para MVP (30%)
-🔄 **Painel Admin e Sistema de Pagamentos** (CRÍTICO - adicionado)  
-🔄 Flow Builder visual  
-🔄 Engine de execução de fluxos  
-🔄 CRUD de fluxos  
-🔄 12 integrações adicionais  
-🔄 Analytics com dados reais  
+### O que falta para MVP (10%)
+🔄 **Engine de execução de fluxos** (CRÍTICO — Sprint 2)  
 🔄 Melhorias no bot (envio de mensagens/mídia)  
 
-### Timeline Estimado
-**12-14 semanas** (3-3,5 meses) para MVP completo
+### Sprints Concluídas
+| Sprint | Descrição | Data | Testes |
+|--------|-----------|------|--------|
+| 0 | Admin + Pagamentos | 03/02/2026 | 52 |
+| 1 | Flow Builder Visual | 03-04/02/2026 | 51 |
+| 1.5 | Onboarding 3 Etapas | 06/02/2026 | 37 |
+| **Total** | | | **140** |
 
-**Breakdown:**
-- Sprint 0: Admin + Pagamentos (2 semanas) - **Simplificado**
-- Sprint 1: Flow Builder (2-3 semanas)
-- Sprint 2: Engine de Execução (2-3 semanas)
-- Sprint 3: CRUD Fluxos + Bot (1-2 semanas)
-- Sprint 4-5: Integrações (4 semanas)
-- Sprint 6: Analytics + Polimento (1-2 semanas)
-- Sprint 8: Testes (1 semana)
-
-### Priorização
-1. **Crítico:** Painel Admin + Pagamentos (sem isso, não há self-service)
-2. **Crítico:** Flow Builder + Engine (sem isso, não há produto)
-3. **Importante:** CRUD de Fluxos + Bot Melhorias
-4. **Desejável:** Integrações + Analytics
-
-### Recomendação
-Iniciar pela **Sprint 0** (Admin + Pagamentos) para ter infraestrutura de monetização pronta. Depois focar 100% nas Sprints 1-3 (Flow Builder, Engine, CRUD). Um fluxo funcionando com pagamento automatizado vale mais que 14 integrações sem receita.
+### Próxima Sprint
+**Sprint 2: Engine de Execução de Fluxos** — Máquina de estados, sessões de conversa, processamento de mensagens, 18 NodeProcessors.
 
 ---
 
-**Última atualização:** 03/02/2026  
-**Próxima revisão:** Após Sprint 1 (Flow Builder)  
+**Última atualização:** 06/02/2026  
+**Próxima revisão:** Após Sprint 2 (Engine de Execução)  
 **Mantido por:** Equipe de Desenvolvimento Zaptria
