@@ -27,13 +27,22 @@ Route::post('/login', [AuthController::class, 'login'])
     ->name('login.post')
     ->middleware('guest');
 
-// Register
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])
+// Onboarding - Step 1 (dados pessoais)
+Route::get('/register', [RegisterController::class, 'showStep1'])
     ->name('register')
     ->middleware('guest');
 
-Route::post('/register', [RegisterController::class, 'register'])
-    ->name('register.post')
+Route::post('/register', [RegisterController::class, 'processStep1'])
+    ->name('register.step1')
+    ->middleware('guest');
+
+// Onboarding - Step 2 (dados da empresa, opcional)
+Route::get('/register/company', [RegisterController::class, 'showStep2'])
+    ->name('register.company')
+    ->middleware('guest');
+
+Route::post('/register/company', [RegisterController::class, 'processStep2'])
+    ->name('register.step2')
     ->middleware('guest');
 
 // Checkout

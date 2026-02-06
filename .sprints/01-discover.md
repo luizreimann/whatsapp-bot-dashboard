@@ -693,36 +693,45 @@
 ### 🔴 CRÍTICO (Bloqueadores do MVP)
 1. Painel Admin e Sistema de Pagamentos
 2. Flow Builder Visual
-3. Engine de Execução de Fluxos
+3. **Onboarding em 3 Etapas (Sprint 1.5)** — Detectado pós-Sprint 1
+4. Engine de Execução de Fluxos
 
 ### 🟡 IMPORTANTE (Necessário para MVP funcional)
-4. Gerenciamento de Fluxos
-5. Bot WhatsApp - Melhorias
+5. Gerenciamento de Fluxos
+6. Bot WhatsApp - Melhorias
 
 ### 🟢 DESEJÁVEL (Adiciona valor ao MVP)
-6. Integrações (12 novas)
-7. Analytics Básico
+7. Integrações (12 novas)
+8. Analytics Básico
 
 ### 🔵 INFRAESTRUTURA (Necessário para produção)
-8. DevOps e Monitoring
-9. Segurança
-10. Backup
+9. DevOps e Monitoring
+10. Segurança
+11. Backup
 
 ---
 
 ## 📅 Estimativa de Esforço
 
-**Total estimado:** 12-14 semanas
+**Total estimado:** 13-16 semanas
 
-- Sprint 0: Admin + Pagamentos (2 semanas)
-- Sprint 1: Flow Builder (2-3 semanas)
+- Sprint 0: Admin + Pagamentos (2 semanas) ✅
+- Sprint 1: Flow Builder (2-3 semanas) ✅
+- **Sprint 1.5: Onboarding em 3 Etapas (1-2 semanas)** ← Nova (detectada pós-Sprint 1)
 - Sprint 2: Engine de Execução (2-3 semanas)
 - Sprint 3: CRUD Fluxos + Bot (1-2 semanas)
 - Sprint 4-5: Integrações (4 semanas)
 - Sprint 6: Analytics + Polimento (1-2 semanas)
 - Sprint 7: Testes e Homologação (1 semana)
 
+> **Nota:** A Sprint 1.5 foi identificada como necessidade crítica após a conclusão da Sprint 1.
+> O fluxo de cadastro/checkout atual (tela única) precisa ser dividido em 3 etapas para melhorar
+> a UX de onboarding: (1) Dados do Dono, (2) Dados da Empresa (opcional), (3) Checkout.
+> Inclui criação de tabela `companies`, validação de CPF/CNPJ, layout dedicado com stepper,
+> busca de CEP via ViaCEP e máscaras de input.
+> Ver especificação completa em `.sprints/1.5/01-spec.md`.
+
 ---
 
-**Última atualização:** 03/02/2026  
+**Última atualização:** 06/02/2026  
 **Próxima revisão:** Após conclusão de cada sprint

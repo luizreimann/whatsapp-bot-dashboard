@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.onboarding', ['currentStep' => 3])
 
 @section('title', 'Checkout | Zaptria')
 
